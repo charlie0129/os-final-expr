@@ -3,7 +3,7 @@ Item::Item()
 {
 }
 
-int Item::addItem(std::string name)
+int Item::addItem(const std::string& name)
 {
     mtx_itemList.lock();
     if (itemList.find(name) != itemList.end())
@@ -19,7 +19,7 @@ err:
     return -1;
 }
 
-int Item::addProperty(std::string itemName, std::string propertyName)
+int Item::addProperty(const std::string& itemName, const std::string& propertyName)
 {
     mtx_itemList.lock();
     std::map<std::string, std::map<std::string, int>>::iterator it;
@@ -42,7 +42,7 @@ err:
     return -1;
 }
 
-int Item::changePropertyValue(std::string itemName, std::string propertyName, int value)
+int Item::changePropertyValue(const std::string& itemName, const std::string& propertyName, int value)
 {
     mtx_itemList.lock();
     std::map<std::string, std::map<std::string, int>>::iterator it_itemList;
@@ -66,7 +66,7 @@ err:
     return -1;
 }
 
-int Item::getPropertyValue(std::string itemName, std::string propertyName)
+int Item::getPropertyValue(const std::string& itemName, const std::string& propertyName)
 {
     mtx_itemList.lock();
     std::map<std::string, std::map<std::string, int>>::iterator it_itemList;
@@ -89,19 +89,19 @@ err:
     return -1;
 }
 
-int Item::increaseQuantity(std::string itemName, int offset)
+int Item::increaseQuantity(const std::string& itemName, int offset)
 {
     return changePropertyValue(itemName,
                                "quantity",
                                getPropertyValue(itemName, "quantity") + offset);
 }
 
-int Item::decreaseQuantity(std::string itemName, int offset)
+int Item::decreaseQuantity(const std::string& itemName, int offset)
 {
     return increaseQuantity(itemName, offset);
 }
 
-int Item::getQuantity(std::string itemName)
+int Item::getQuantity(const std::string& itemName)
 {
     return getPropertyValue(itemName, "quantity");
 }

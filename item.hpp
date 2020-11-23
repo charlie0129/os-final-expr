@@ -15,13 +15,13 @@ class Item
     public:
         Item();
 
-        int addItem(std::string name);
-        int addProperty(std::string itemName, std::string propertyName);
-        int changePropertyValue(std::string itemName, std::string propertyName, int value);
-        int getPropertyValue(std::string itemName, std::string propertyName);
-        int increaseQuantity(std::string itemName, int offset = 1);
-        int decreaseQuantity(std::string itemName, int offset = -1);
-        int getQuantity(std::string itemName);
+        int addItem(const std::string& name);
+        int addProperty(const std::string& itemName, const std::string& propertyName);
+        int changePropertyValue(const std::string& itemName, const std::string& propertyName, int value);
+        int getPropertyValue(const std::string& itemName, const std::string& propertyName);
+        int increaseQuantity(const std::string& itemName, int offset = 1);
+        int decreaseQuantity(const std::string& itemName, int offset = -1);
+        int getQuantity(const std::string& itemName);
 
         ~Item();
 };
