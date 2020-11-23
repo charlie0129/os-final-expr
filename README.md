@@ -2,7 +2,7 @@
 
 ### TODO
 
-- [x] Basic functions for `item` repository.
-- [x] Make methods in `item` thread-safe.
-- [x] Serialization and deserialization of `item` using json-like formats.
-- [x] Test codes and description.
+- [x] basic methods for `item` repository
+- [x] make methods in `item` thread-safe
+- [x] serialization and deserialization of `item` using json-like formats
+- [x] test code and description
