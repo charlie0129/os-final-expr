@@ -1,5 +1,4 @@
 #pragma once
-#include <vector>
 #include <map>
 #include <string>
 #include <iostream>
@@ -13,7 +12,6 @@ class Item
         std::mutex mtx_itemList;
 
     public:
-
         Item();
 
         int addItem(std::string name);

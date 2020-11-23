@@ -1,7 +1,6 @@
 #include "item.hpp"
 Item::Item()
 {
-
 }
 
 int Item::addItem(std::string name)
@@ -118,5 +117,4 @@ err:
 
 Item::~Item()
 {
-
 }
