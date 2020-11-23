@@ -1,7 +1,6 @@
 SOURCE_DIR = .
 CXXOBJS = $(patsubst %.cpp, %.o, $(wildcard $(SOURCE_DIR)/*.cpp))
-CXXBIN = final
-BIN = $(CXXBIN)
+BIN = final
 CXX = g++
 CFLAGS = -g
 CXXFLAGS = -std=c++17 -g
@@ -14,13 +13,13 @@ all: $(BIN)
 run: $(BIN)
 	./$(BIN)
 
-# build C++ binaries
-$(CXXBIN): $(CXXOBJS)
-	$(CXX) $(LDFLAGS) -o $@ $^
-
 # build C++ objects
-$(CXXOBJS): %.o: %.cpp
+$(CXXOBJS): %.o: %.cpp %.hpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+# build C++ binaries
+$(BIN): $(CXXOBJS)
+	$(CXX) $(LDFLAGS) -o $@ $^
 
 clean:
 	$(RM) $(BIN)
