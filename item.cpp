@@ -125,14 +125,24 @@ void Item::writeObject(std::ostream &outputStream)
         for (std::map<std::string, int>::iterator j = i->second.begin();
              j != i->second.end();
              j++, idx++)
+        {
             if (idx == i->second.size() - 1)
+            {
                 outputStream << "    \"" << j->first << "\": " << j->second << ",\n";
+            }
             else
+            {
                 outputStream << "    \"" << j->first << "\": " << j->second << "\n";
+            }
+        }
         if (idx_ == itemList.size() - 1)
+        {
             outputStream << "  },\n";
+        }
         else
+        {
             outputStream << "  }\n";
+        }
     }
     outputStream << "}";
     mtx_itemList.unlock();
@@ -143,7 +153,9 @@ void Item::readObject(std::istream &inputStream)
     std::string jstr = "";
     std::string tmp;
     while (std::getline(inputStream, tmp))
+    {
         jstr += (tmp + "\n");
+    }
     int idx1 = 0;
     int idx2 = 0;
     while (true)
@@ -165,16 +177,24 @@ void Item::readObject(std::istream &inputStream)
                 addProperty(obj, key);
                 idx1 = idx2 + 3;
                 while (jstr[idx2] != '\n')
+                {
                     idx2++;
+                }
                 if (jstr[idx2 - 1] == ',')
+                {
                     changePropertyValue(obj, key, atoi(jstr.substr(idx1, idx2 - idx1 - 1).c_str()));
+                }
                 else
+                {
                     changePropertyValue(obj, key, atoi(jstr.substr(idx1, idx2 - idx1).c_str()));
+                }
                 idx2 += 3;
             }
             idx2 = idx_end + 2;
             if (jstr[idx2] == '}')
+            {
                 break;
+            }
         }
     }
 }

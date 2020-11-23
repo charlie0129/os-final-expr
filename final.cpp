@@ -23,11 +23,11 @@ void test()
     // -----------------
     // {
     //   "milk": {
-    //     "priority": 10
+    //     "priority": 10,
     //     "quantity": 8
-    //   }
+    //   },
     //   "pancake": {
-    //     "priority": 10345
+    //     "priority": 10345,
     //     "quantity": 11
     //   }
     // }
@@ -43,7 +43,7 @@ void test()
     {
         i.increaseQuantity("sd");
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
     }
@@ -51,7 +51,7 @@ void test()
     std::ofstream ofs{"test.json"};
     i.writeObject(ofs);
     ofs.close();
-    
+
     // Deserialize from file, to "ii"
     std::ifstream ifs{"test.json"};
     Item ii{ifs};
@@ -61,8 +61,8 @@ void test()
     ii.writeObject(std::cout);
     putchar('\n');
 
-    std::cout << BLUE_BOLD_TEXT "Get quantity of milk: " REMOVE_TEXT_ATTR << ii.getQuantity("milk") <<"\n";
-    std::cout << BLUE_BOLD_TEXT "Get quantity of pancake: " REMOVE_TEXT_ATTR << ii.getQuantity("pancake") <<"\n";
+    std::cout << BLUE_BOLD_TEXT "Get quantity of milk: " REMOVE_TEXT_ATTR << ii.getQuantity("milk") << "\n";
+    std::cout << BLUE_BOLD_TEXT "Get quantity of pancake: " REMOVE_TEXT_ATTR << ii.getQuantity("pancake") << "\n";
     // -------- Code for Testing Purposes ---------
 }
 
