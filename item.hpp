@@ -3,25 +3,27 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include <mutex>
 
 
 class Item
 {
     private:
-        std::map<std::string, int> itemList {
-            {"milk", 0},
-            {"sd", 1}
-        };
-        std::vector<std::map<std::string, int>*> itemPropertyList;
+        std::map<std::string, std::map<std::string, int>> itemList;
+        std::mutex mtx_itemList;
 
     public:
+
         Item();
 
         void test();
-
-        void print();
-
-        void addQuantity(std::string itemCategory, int offset);
+        int addItem(std::string name);
+        int addProperty(std::string itemName, std::string propertyName);
+        int changePropertyValue(std::string itemName, std::string propertyName, int value);
+        int getProperty(std::string itemName, std::string propertyName);
+        int increaseQuantity(std::string itemName, int offset = 1);
+        int decreaseQuantity(std::string itemName, int offset = 1);
+        int getQuantity(std::string itemName);
 
         ~Item();
 };
