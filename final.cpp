@@ -48,12 +48,12 @@ void test()
         std::cerr << e.what() << '\n';
     }
     // Serialize to file
-    std::ofstream ofs{"test.txt"};
+    std::ofstream ofs{"test.json"};
     i.writeObject(ofs);
     ofs.close();
     
     // Deserialize from file, to "ii"
-    std::ifstream ifs{"test.txt"};
+    std::ifstream ifs{"test.json"};
     Item ii{ifs};
     ifs.close();
     // Serialize to stdout
