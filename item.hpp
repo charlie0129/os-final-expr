@@ -16,7 +16,6 @@ class Item
 
         Item();
 
-        void test();
         int addItem(std::string name);
         int addProperty(std::string itemName, std::string propertyName);
         int changePropertyValue(std::string itemName, std::string propertyName, int value);
