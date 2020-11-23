@@ -120,9 +120,7 @@ void Item::writeObject(std::ostream &outputStream)
         for (std::map<std::string, int>::iterator j = i.second.begin();
              j != i.second.end();
              j++)
-        {
             outputStream << "    \"" << j->first << "\": " << j->second << "\n";
-        }
         outputStream << "  }\n";
     }
     outputStream << "}";
