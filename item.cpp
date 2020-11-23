@@ -145,9 +145,9 @@ void Item::readObject(std::istream &inputStream)
             std::string obj = jstr.substr(idx1 + 1, idx2 - idx1 - 1);
             addItem(obj);
             idx1 = idx2;
-            int idx_inobj_end = idx1;
-            while (jstr[++idx_inobj_end] != '}');
-            while (idx1 < idx_inobj_end && idx2 < idx_inobj_end)
+            int idx_end = idx1;
+            while (jstr[++idx_end] != '}');
+            while (idx1 < idx_end && idx2 < idx_end)
             {
                 while (jstr[idx2 = ++idx1] != '\"');
                 while (jstr[++idx2] != '\"');
@@ -162,7 +162,7 @@ void Item::readObject(std::istream &inputStream)
                     changePropertyValue(obj, key, atoi(jstr.substr(idx1, idx2 - idx1).c_str()));
                 idx2 += 3;
             }
-            idx2 = idx_inobj_end + 2;
+            idx2 = idx_end + 2;
             if (jstr[idx2] == '}')
                 break;
         }
