@@ -1,0 +1,9 @@
+/*
+**/.DS_Store
+!.gitignore
+!final.cpp
+!final.hpp
+!item.hpp
+!item.cpp
+!Makefile
+!README.md
