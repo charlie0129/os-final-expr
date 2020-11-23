@@ -4,15 +4,14 @@
 #include <string>
 #include <iostream>
 
-enum class ITEM
-{
-    MILK,
-    PANCAKE
-};
 
 class Item
 {
     private:
+        std::map<std::string, int> itemList {
+            {"milk", 0},
+            {"sd", 1}
+        };
         std::vector<std::map<std::string, int>*> itemPropertyList;
 
     public:
@@ -22,6 +21,7 @@ class Item
 
         void print();
 
+        void addQuantity(std::string itemCategory, int offset);
 
         ~Item();
 };
