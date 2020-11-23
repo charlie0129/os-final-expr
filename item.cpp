@@ -115,14 +115,24 @@ void Item::writeObject(std::ostream &outputStream)
 {
     mtx_itemList.lock();
     outputStream << "{\n";
-    for (auto &i : itemList)
+    int idx_ = 1;
+    for (std::map<std::string, std::map<std::string, int>>::iterator i = itemList.begin();
+         i != itemList.end();
+         i++, idx_++)
     {
-        outputStream << "  \"" << i.first << "\": {\n";
-        for (std::map<std::string, int>::iterator j = i.second.begin();
-             j != i.second.end();
-             j++)
-            outputStream << "    \"" << j->first << "\": " << j->second << "\n";
-        outputStream << "  }\n";
+        outputStream << "  \"" << i->first << "\": {\n";
+        int idx = 1;
+        for (std::map<std::string, int>::iterator j = i->second.begin();
+             j != i->second.end();
+             j++, idx++)
+            if (idx == i->second.size() - 1)
+                outputStream << "    \"" << j->first << "\": " << j->second << ",\n";
+            else
+                outputStream << "    \"" << j->first << "\": " << j->second << "\n";
+        if (idx_ == itemList.size() - 1)
+            outputStream << "  },\n";
+        else
+            outputStream << "  }\n";
     }
     outputStream << "}";
     mtx_itemList.unlock();
