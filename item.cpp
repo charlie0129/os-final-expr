@@ -113,6 +113,7 @@ int Item::getQuantity(const std::string &itemName)
 
 void Item::writeObject(std::ostream &outputStream)
 {
+    mtx_itemList.lock();
     outputStream << "{\n";
     for (auto &i : itemList)
     {
@@ -124,6 +125,7 @@ void Item::writeObject(std::ostream &outputStream)
         outputStream << "  }\n";
     }
     outputStream << "}";
+    mtx_itemList.unlock();
 }
 
 void Item::readObject(std::istream &inputStream)
