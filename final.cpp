@@ -1,10 +1,11 @@
 #include "final.hpp"
 
-
-int main(int argc, char **argv)
+void test()
 {
     // -------- Code for Testing Purposes ---------
+    std::cout << BLUE_BOLD_TEXT "Created an item list.\n" REMOVE_TEXT_ATTR;
     Item i{};
+    // Add some properties to "i"
     i.addItem("milk");
     i.addProperty("milk", "quantity");
     i.addProperty("milk", "priority");
@@ -18,11 +19,25 @@ int main(int argc, char **argv)
     i.changePropertyValue("pancake", "quantity", 10);
     i.changePropertyValue("pancake", "priority", 10345);
     i.increaseQuantity("pancake");
+    // It will have the structure below:
+    // -----------------
+    // {
+    //   "milk": {
+    //     "priority": 10
+    //     "quantity": 8
+    //   }
+    //   "pancake": {
+    //     "priority": 10345
+    //     "quantity": 11
+    //   }
+    // }
+    // -----------------
 
+    // Serialize to stdout
     std::cout << BLUE_BOLD_TEXT "Serialize to json-like:\n" REMOVE_TEXT_ATTR;
     i.writeObject(std::cout);
     putchar('\n');
-
+    // Change an unknown property
     std::cout << BLUE_BOLD_TEXT "Exception test:\n" REMOVE_TEXT_ATTR;
     try
     {
@@ -32,21 +47,28 @@ int main(int argc, char **argv)
     {
         std::cerr << e.what() << '\n';
     }
-
+    // Serialize to file
     std::ofstream ofs{"test.txt"};
     i.writeObject(ofs);
     ofs.close();
-
+    
+    // Deserialize from file, to "ii"
     std::ifstream ifs{"test.txt"};
     Item ii{ifs};
     ifs.close();
-
+    // Serialize to stdout
     std::cout << BLUE_BOLD_TEXT "Deserialize from file:\n" REMOVE_TEXT_ATTR;
     ii.writeObject(std::cout);
     putchar('\n');
 
-    std::cout << BLUE_BOLD_TEXT "Quantities:\n" REMOVE_TEXT_ATTR;
-    std::cout << ii.getQuantity("milk") << " " << ii.getQuantity("pancake") << std::endl;
+    std::cout << BLUE_BOLD_TEXT "Get quantity of milk: " REMOVE_TEXT_ATTR << ii.getQuantity("milk") <<"\n";
+    std::cout << BLUE_BOLD_TEXT "Get quantity of pancake: " REMOVE_TEXT_ATTR << ii.getQuantity("pancake") <<"\n";
     // -------- Code for Testing Purposes ---------
+}
+
+
+int main(int argc, char **argv)
+{
+    test();
     return 0;
 }
