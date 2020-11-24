@@ -182,11 +182,11 @@ void Item::readObject(std::istream &inputStream)
                 }
                 if (jstr[idx2 - 1] == ',')
                 {
-                    changePropertyValue(obj, key, atoi(jstr.substr(idx1, idx2 - idx1 - 1).c_str()));
+                    changePropertyValue(obj, key, std::stoi(jstr.substr(idx1, idx2 - idx1 - 1)));
                 }
                 else
                 {
-                    changePropertyValue(obj, key, atoi(jstr.substr(idx1, idx2 - idx1).c_str()));
+                    changePropertyValue(obj, key, std::stoi(jstr.substr(idx1, idx2 - idx1)));
                 }
                 idx2 += 3;
             }
