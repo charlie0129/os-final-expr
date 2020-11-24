@@ -1,4 +1,5 @@
 #include "item.hpp"
+
 Item::Item()
 {
 }
@@ -11,15 +12,19 @@ Item::Item(std::istream &inputStream)
 int Item::addItem(const std::string &name)
 {
     mtx_itemList.lock();
+
     if (itemList.find(name) != itemList.end())
     {
         mtx_itemList.unlock();
         throw std::runtime_error{"The item you are trying to add already exists."};
         goto err;
     }
+
     itemList.insert({name, std::map<std::string, int>{}});
+
     mtx_itemList.unlock();
     return 0;
+
 err:
     return -1;
 }
@@ -27,7 +32,9 @@ err:
 int Item::addProperty(const std::string &itemName, const std::string &propertyName)
 {
     mtx_itemList.lock();
+
     std::map<std::string, std::map<std::string, int>>::iterator it;
+
     if ((it = itemList.find(itemName)) == itemList.end())
     {
         mtx_itemList.unlock();
@@ -40,9 +47,12 @@ int Item::addProperty(const std::string &itemName, const std::string &propertyNa
         throw std::runtime_error{"The property you are trying to add already exists."};
         goto err;
     }
+
     it->second.insert({propertyName, 0});
+
     mtx_itemList.unlock();
     return 0;
+
 err:
     return -1;
 }
@@ -50,8 +60,10 @@ err:
 int Item::changePropertyValue(const std::string &itemName, const std::string &propertyName, int value)
 {
     mtx_itemList.lock();
+
     std::map<std::string, std::map<std::string, int>>::iterator it_itemList;
     std::map<std::string, int>::iterator it_propertyList;
+
     if ((it_itemList = itemList.find(itemName)) == itemList.end())
     {
         mtx_itemList.unlock();
@@ -64,9 +76,12 @@ int Item::changePropertyValue(const std::string &itemName, const std::string &pr
         throw std::runtime_error{"The property you referred to does not exist."};
         goto err;
     }
+
     it_propertyList->second = value;
+
     mtx_itemList.unlock();
     return 0;
+
 err:
     return -1;
 }
@@ -74,8 +89,10 @@ err:
 int Item::getPropertyValue(const std::string &itemName, const std::string &propertyName)
 {
     mtx_itemList.lock();
+
     std::map<std::string, std::map<std::string, int>>::iterator it_itemList;
     std::map<std::string, int>::iterator it_propertyList;
+
     if ((it_itemList = itemList.find(itemName)) == itemList.end())
     {
         mtx_itemList.unlock();
@@ -88,8 +105,11 @@ int Item::getPropertyValue(const std::string &itemName, const std::string &prope
         throw std::runtime_error{"The property you referred to does not exist."};
         goto err;
     }
+
     mtx_itemList.unlock();
+
     return it_propertyList->second;
+
 err:
     return -1;
 }
@@ -114,13 +134,16 @@ int Item::getQuantity(const std::string &itemName)
 void Item::writeObject(std::ostream &outputStream)
 {
     mtx_itemList.lock();
+
     outputStream << "{\n";
+
     int idx_ = 1;
     for (std::map<std::string, std::map<std::string, int>>::iterator i = itemList.begin();
          i != itemList.end();
          i++, idx_++)
     {
         outputStream << "  \"" << i->first << "\": {\n";
+
         int idx = 1;
         for (std::map<std::string, int>::iterator j = i->second.begin();
              j != i->second.end();
@@ -135,6 +158,7 @@ void Item::writeObject(std::ostream &outputStream)
                 outputStream << "    \"" << j->first << "\": " << j->second << "\n";
             }
         }
+
         if (idx_ == itemList.size() - 1)
         {
             outputStream << "  },\n";
@@ -144,7 +168,9 @@ void Item::writeObject(std::ostream &outputStream)
             outputStream << "  }\n";
         }
     }
+
     outputStream << "}";
+
     mtx_itemList.unlock();
 }
 
@@ -156,16 +182,19 @@ void Item::readObject(std::istream &inputStream)
     {
         jstr += (tmp + "\n");
     }
+
     int idx1 = 0;
     int idx2 = 0;
     while (true)
     {
         while (jstr[idx2 = ++idx1] != '\"');
         while (jstr[++idx2] != '\"');
+
         if (jstr[idx2 + 3] == '{')
         {
             std::string obj = jstr.substr(idx1 + 1, idx2 - idx1 - 1);
             addItem(obj);
+
             idx1 = idx2;
             int idx_end = idx1;
             while (jstr[++idx_end] != '}');
@@ -173,13 +202,16 @@ void Item::readObject(std::istream &inputStream)
             {
                 while (jstr[idx2 = ++idx1] != '\"');
                 while (jstr[++idx2] != '\"');
+
                 std::string key = jstr.substr(idx1 + 1, idx2 - idx1 - 1);
                 addProperty(obj, key);
+
                 idx1 = idx2 + 3;
                 while (jstr[idx2] != '\n')
                 {
                     idx2++;
                 }
+
                 if (jstr[idx2 - 1] == ',')
                 {
                     changePropertyValue(obj, key, std::stoi(jstr.substr(idx1, idx2 - idx1 - 1)));
@@ -188,9 +220,12 @@ void Item::readObject(std::istream &inputStream)
                 {
                     changePropertyValue(obj, key, std::stoi(jstr.substr(idx1, idx2 - idx1)));
                 }
+
                 idx2 += 3;
             }
+
             idx2 = idx_end + 2;
+
             if (jstr[idx2] == '}')
             {
                 break;
