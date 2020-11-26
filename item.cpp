@@ -17,16 +17,13 @@ int Item::addItem(const std::string &name)
     {
         mtx_itemList.unlock();
         throw std::runtime_error{"The item you are trying to add already exists."};
-        goto err;
+        return -1;
     }
 
     itemList.insert({name, std::map<std::string, int>{}});
 
     mtx_itemList.unlock();
     return 0;
-
-err:
-    return -1;
 }
 
 int Item::addProperty(const std::string &itemName, const std::string &propertyName)
@@ -39,22 +36,19 @@ int Item::addProperty(const std::string &itemName, const std::string &propertyNa
     {
         mtx_itemList.unlock();
         throw std::runtime_error{"The item you referred to does not exist."};
-        goto err;
+        return -1;
     }
     if (it->second.find(propertyName) != it->second.end())
     {
         mtx_itemList.unlock();
         throw std::runtime_error{"The property you are trying to add already exists."};
-        goto err;
+        return -1;
     }
 
     it->second.insert({propertyName, 0});
 
     mtx_itemList.unlock();
     return 0;
-
-err:
-    return -1;
 }
 
 int Item::changePropertyValue(const std::string &itemName, const std::string &propertyName, int value)
@@ -68,22 +62,19 @@ int Item::changePropertyValue(const std::string &itemName, const std::string &pr
     {
         mtx_itemList.unlock();
         throw std::runtime_error{"The item you referred to does not exist."};
-        goto err;
+        return -1;
     }
     if ((it_propertyList = it_itemList->second.find(propertyName)) == it_itemList->second.end())
     {
         mtx_itemList.unlock();
         throw std::runtime_error{"The property you referred to does not exist."};
-        goto err;
+        return -1;
     }
 
     it_propertyList->second = value;
 
     mtx_itemList.unlock();
     return 0;
-
-err:
-    return -1;
 }
 
 int Item::getPropertyValue(const std::string &itemName, const std::string &propertyName)
@@ -97,21 +88,18 @@ int Item::getPropertyValue(const std::string &itemName, const std::string &prope
     {
         mtx_itemList.unlock();
         throw std::runtime_error{"The item you referred to does not exist."};
-        goto err;
+        return -1;
     }
     if ((it_propertyList = it_itemList->second.find(propertyName)) == it_itemList->second.end())
     {
         mtx_itemList.unlock();
         throw std::runtime_error{"The property you referred to does not exist."};
-        goto err;
+        return -1;
     }
 
     mtx_itemList.unlock();
 
     return it_propertyList->second;
-
-err:
-    return -1;
 }
 
 int Item::increaseQuantity(const std::string &itemName, int offset)
