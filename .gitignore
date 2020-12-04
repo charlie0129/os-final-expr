@@ -5,5 +5,9 @@
 !final.hpp
 !item.hpp
 !item.cpp
+!customer.cpp
+!customer.hpp
+!supplier.cpp
+!supplier.hpp
 !Makefile
 !README.md
