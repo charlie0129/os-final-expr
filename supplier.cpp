@@ -13,11 +13,11 @@ Supplier::Supplier(std::string name, Item& i){
     this->supply_time = 1;
     this->alive = true;
     this->needSupply = false;
-    supply_thread = new std::thread(Supplier::supplyItem);
-    supply_thread->join();
+    supply_thread = new std::thread(&Supplier::supplyItem, this);
 }
 
 Supplier::~Supplier(){
+    supply_thread->join();
     delete supply_thread;
     supply_thread = nullptr;
 }
@@ -29,7 +29,6 @@ std::string Supplier::getItem_name(){
 std::thread* Supplier::getSupply_thread(){
     return supply_thread;
 }
-
 
 bool Supplier::isNeedSupply(){
     return needSupply;
@@ -64,9 +63,16 @@ void Supplier::setSupply_time(int time){
 }
 
 void Supplier::supplyItem(){
+    #ifdef DEBUG
+        std::cout << "supply_thread started. " << std::endl;
+    #endif
     while(alive){
-        if(needSupply){
-            sleep(supply_time);
+        #ifdef DEBUG
+        std::cout << isAlive() << std::endl;
+        #endif
+        sleep(1);
+        if(isNeedSupply()){
+            sleep(getSupply_time());
             item->increaseQuantity(item_name,supply_nums);
             needSupply = false;
         }
@@ -74,4 +80,5 @@ void Supplier::supplyItem(){
     #ifdef DEBUG
         std::cout << "supply_thread no longer alive. " << std::endl;
     #endif
+    return;
 }
