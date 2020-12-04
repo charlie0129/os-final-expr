@@ -1,5 +1,7 @@
 #include "final.hpp"
 
+Item itemRepository{};
+
 void test()
 {
     // -------- Code for Testing Purposes ---------
