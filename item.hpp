@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <ostream>
 #include <istream>
+#include <vector>
 
 class Item
 {
@@ -24,6 +25,7 @@ class Item
         int increaseQuantity(const std::string& itemName, int offset = 1);
         int decreaseQuantity(const std::string& itemName, int offset = -1);
         int getQuantity(const std::string& itemName);
+        std::vector <std::string> getItemNameList();
 
         void writeObject(std::ostream& outputStream);
         void readObject(std::istream& inputStream);
