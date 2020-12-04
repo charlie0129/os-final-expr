@@ -67,10 +67,16 @@ void test()
     std::cout << BLUE_BOLD_TEXT "Get quantity of pancake: " REMOVE_TEXT_ATTR << ii.getQuantity("pancake") << "\n";
     // -------- Code for Testing Purposes ---------
 }
-
+void testcreat()
+{
+    std::thread t1(test);
+    std::thread t2(test);
+    t1.join();
+    t2.join();
+}
 
 int main(int argc, char **argv)
 {
-    test();
+    testcreat();
     return 0;
 }
