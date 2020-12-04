@@ -3,7 +3,7 @@ CXXOBJS = $(patsubst %.cpp, %.o, $(wildcard $(SOURCE_DIR)/*.cpp))
 BIN = final
 CXX = g++
 CFLAGS = -g
-CXXFLAGS = -std=c++17 -g -MMD
+CXXFLAGS = -std=c++17 -g -MMD -DDEBUG
 LDFLAGS = -lpthread
 RM = rm -f
 RMR = rm -rf
