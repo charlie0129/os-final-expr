@@ -19,3 +19,15 @@
 - [ ] 缓存管理（关键数据传递采用流控管理）
 - [ ] 小组代码风格是否统一
 - [ ] 小组整体展示效果流畅
+
+### Git commit guidelines
+* **feat**: A new feature
+* **fix**: A bug fix
+* **docs**: Documentation only changes
+* **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing
+  semi-colons, etc)
+* **refactor**: A code change that neither fixes a bug nor adds a feature
+* **perf**: A code change that improves performance
+* **test**: Adding missing or correcting existing tests
+* **chore**: Changes to the build process or auxiliary tools and libraries such as documentation
+  generation
