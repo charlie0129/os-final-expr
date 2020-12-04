@@ -4,7 +4,7 @@ BIN = final
 CXX = g++
 CFLAGS = -g
 CXXFLAGS = -std=c++17 -g -MMD
-LDFLAGS = -lpthread
+LDFLAGS = # -lpthread
 RM = rm -f
 RMR = rm -rf
 
