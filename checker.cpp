@@ -45,7 +45,7 @@ void Checker::doCheckout()
         check_mtx.lock();
         std::pair<std::string, int> cus = waiting_cus.front();
         int m = item->getPropertyValue(cus.first, "price");
-        printf(BLUE_LEADING_ARROW RED_BOLD_TEXT "结账：" REMOVE_TEXT_ATTR GREEN_BOLD_TEXT "商品：%10s, 数量：%3d, 总价：%3d\n" REMOVE_TEXT_ATTR,
+        printf(BLUE_LEADING_ARROW BLUE_BOLD_TEXT "结账：" REMOVE_TEXT_ATTR "商品：%15s, 数量：%3d, 总价：%3d\n",
             cus.first.c_str(),
             cus.second,
             m *cus.second
