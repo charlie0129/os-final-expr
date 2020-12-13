@@ -33,7 +33,7 @@ void Customer::IN()
     #ifdef DEBUG
         std::cout << "customer need: " << itemname.first << "," << goodNum << std::endl;
     #endif
-    while(PresentGoodValue < this->goodNum)
+    while((PresentGoodValue=i->getQuantity(this->itemname.first)) < this->goodNum)
     {
         mySpp->setNeedSupply(true);
         i->getConditionalVariable(itemname.first)->notify_all();
@@ -41,7 +41,6 @@ void Customer::IN()
             std::cout << "customer notifyAll."<< std::endl;
         #endif
         i->getConditionalVariable(itemname.first)->wait(lock);
-        
     }
     
     //lock.lock();

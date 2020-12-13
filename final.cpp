@@ -124,7 +124,11 @@ int main(int argc, char **argv)
         suppliers.push_back(tmp);
     }
 
+<<<<<<< HEAD
     for (size_t i = 0; i < 5; i++)
+=======
+    for (size_t i = 0; i < 6; i++)
+>>>>>>> refs/remotes/origin/CVandMutex
     {
         Customer* tmp=new Customer{itemRepository, suppliers, &checker};
         customers.push_back(tmp);

@@ -95,6 +95,9 @@ void Supplier::supplyItem()
         //lock.lock();
         sleep(getSupply_time());
         item->increaseQuantity(item_name, supply_nums);
+        #ifdef DEBUG
+                std::cout << "[" << item_name << "]" << "supply done. now have: "<< item->getQuantity(item_name) << std::endl;
+        #endif
         needSupply = false;
         item->getConditionalVariable(item_name)->notify_all();
         #ifdef DEBUG
