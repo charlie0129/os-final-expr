@@ -33,6 +33,11 @@ int main(int argc, char **argv)
     signal(SIGTERM, signal_handler);
 
     std::ifstream ifs{"test.json"};
+    if (ifs.fail())
+    {
+        puts(RED_BOLD_TEXT "请先创建数据库！" REMOVE_TEXT_ATTR);
+        return 1;
+    }
     itemRepository.readObject(ifs);
     ifs.close();
 
