@@ -49,8 +49,8 @@ void Customer::IN()
         #endif
         printf(RED_LEADING_ARROW RED_BOLD_TEXT "缺货：" REMOVE_TEXT_ATTR
                "商品：" YELLOW_TEXT "%15s" REMOVE_TEXT_ATTR
-               ", 需要" YELLOW_TEXT "%2d" REMOVE_TEXT_ATTR
-               "个货, 现有" YELLOW_TEXT "%3d" REMOVE_TEXT_ATTR
+               ", 需要：" YELLOW_TEXT "%2d" REMOVE_TEXT_ATTR
+               "个, 现有：" YELLOW_TEXT "%3d" REMOVE_TEXT_ATTR
                "个\n",
                itemname.first.c_str(),
                this->goodNum,
