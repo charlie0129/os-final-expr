@@ -8,13 +8,15 @@
 #include <stdexcept>
 #include <thread>
 
+#include <atomic>
+
 
 class Supplier{
     private:
         Item* item;
         std::string item_name;
         bool needSupply;
-        std::atomic<bool> alive{false};
+        std::atomic<bool> alive{ false };
         int supply_nums;
         int supply_time;
         std::thread * supply_thread = nullptr;
