@@ -1,7 +1,7 @@
 ## Final experiment of Operating System Concept course at BUPT.
 
 ### How to run this project
-1. create a database file using json grammar using whatever name and extension you want (**grammar is strictly limited**, shown as below)
+1. create a database file using json grammar with whatever name and extension you want (**grammar is strictly limited**, shown as below)
 
    ```json
    {
