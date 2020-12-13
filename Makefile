@@ -16,7 +16,7 @@ $(CXXOBJS): %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(BIN): $(CXXOBJS)
-	$(CXX) $(LDFLAGS) -o $@ $^
+	$(CXX) $^ $(LDFLAGS) -o $@
 
 clean:
 	$(RM) $(BIN)
