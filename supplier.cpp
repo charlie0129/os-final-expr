@@ -78,28 +78,23 @@ void Supplier::supplyItem()
 #ifdef DEBUG
     std::cout << "supply_thread started. " << std::endl;
 #endif
-    std::unique_lock<std::mutex> lock(item->getMutex());
+    // std::unique_lock<std::mutex> lock(item->getMutex());
     while (alive)
     {
 #ifdef DEBUG
         std::cout << "[" << item_name << "]" <<"supply_thread: " << isAlive() << std::endl;
 #endif
-        while (!isNeedSupply())
+        if(isNeedSupply())
         {
             #ifdef DEBUG
-                std::cout << "[" << item_name << "]" << "supplier is waiting."<< std::endl;
-            #endif
-            item->getConditionalVariable(item_name)->wait(lock);
+        std::cout << "[" << item_name << "]" <<"supplier supplied" << std::endl;
+#endif
+            item->increaseQuantity(item_name, supply_nums);
+            needSupply = false;
         }
-        lock.lock();
+        // lock.lock();
         sleep(getSupply_time());
-        item->increaseQuantity(item_name, supply_nums);
-        needSupply = false;
-        item->getConditionalVariable(item_name)->notify_all();
-        #ifdef DEBUG
-                std::cout << "[" << item_name << "]" << "supplier notify_all."<< std::endl;
-        #endif
-        lock.unlock();
+        // lock.unlock();
     }
 #ifdef DEBUG
     std::cout << "supply_thread no longer alive. " << std::endl;
