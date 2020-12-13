@@ -270,4 +270,6 @@ Item::~Item()
 {
     for (auto &i : conditionVarList)
         delete i.second;
+    for (auto &i : mtx_cvList)
+        delete i.second;
 }
