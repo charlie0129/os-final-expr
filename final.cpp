@@ -1,6 +1,8 @@
 #include "final.hpp"
 
 Item itemRepository{};
+std::mutex ReSupply;//通知补获锁
+std::mutex Check;//顾客结账锁
 
 void test()
 {

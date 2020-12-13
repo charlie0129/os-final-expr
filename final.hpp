@@ -4,6 +4,8 @@
 #include "item.hpp"
 #include "customer.hpp"
 #include<string>
+#include<mutex>
+#include <semaphore.h>
 #define MAX_CUSTOMER 10
 
 #define BLUE_BOLD_TEXT "\033[1;34m"
