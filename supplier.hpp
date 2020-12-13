@@ -1,5 +1,6 @@
 #pragma once
 #include "item.hpp"
+#include "colorcode.hpp"
 #include <map>
 #include <unistd.h>
 #include <string>
@@ -10,21 +11,22 @@
 #include <atomic>
 
 
-class Supplier{
+class Supplier
+{
     private:
-        Item* item;
+        Item *item;
         std::string item_name;
         bool needSupply;
         std::atomic<bool> alive{ false };
         int supply_nums;
         int supply_time;
-        std::thread * supply_thread = nullptr;
+        std::thread *supply_thread = nullptr;
     public:
         Supplier();
         ~Supplier();
-        Supplier(std::string name,Item& i);
-        
-        std::thread* getSupply_thread();
+        Supplier(std::string name, Item &i);
+
+        std::thread *getSupply_thread();
         std::string getItem_name();
         bool isNeedSupply();
         bool isAlive();

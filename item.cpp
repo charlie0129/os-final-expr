@@ -23,6 +23,8 @@ int Item::addItem(const std::string &name)
     itemList.insert({name, std::map<std::string, int>{}});
     std::condition_variable *v = new std::condition_variable;
     conditionVarList.insert({name, v});
+    std::mutex *x = new std::mutex;
+    mtx_cvList.insert({name, x});
     mtx_itemList.unlock();
     return 0;
 }
@@ -120,10 +122,10 @@ int Item::getQuantity(const std::string &itemName)
     return getPropertyValue(itemName, "quantity");
 }
 
-std::condition_variable* Item::getConditionalVariable(const std::string& itemName)
+std::condition_variable *Item::getConditionalVariable(const std::string &itemName)
 {
-    std::map<std::string, std::condition_variable*>::iterator it;
-    if ((it=conditionVarList.find(itemName)) == conditionVarList.end())
+    std::map<std::string, std::condition_variable *>::iterator it;
+    if ((it = conditionVarList.find(itemName)) == conditionVarList.end())
     {
         throw std::runtime_error{"The item you referred to does not exist."};
         return nullptr;
@@ -132,9 +134,16 @@ std::condition_variable* Item::getConditionalVariable(const std::string& itemNam
     return it->second;
 }
 
-std::mutex& Item::getMutex()
+std::mutex *Item::getMutex(const std::string &itemName)
 {
-    return mtx_cv;
+    std::map<std::string, std::mutex *>::iterator it;
+    if ((it = mtx_cvList.find(itemName)) == mtx_cvList.end())
+    {
+        throw std::runtime_error{"The item you referred to does not exist."};
+        return nullptr;
+    }
+
+    return it->second;
 }
 
 std::vector <std::string> Item::getItemNameList()
@@ -165,7 +174,7 @@ void Item::writeObject(std::ostream &outputStream)
              j != i->second.end();
              j++, idx++)
         {
-            if (idx == i->second.size() - 1)
+            if (idx <= i->second.size() - 1)
             {
                 outputStream << "    \"" << j->first << "\": " << j->second << ",\n";
             }
@@ -175,7 +184,7 @@ void Item::writeObject(std::ostream &outputStream)
             }
         }
 
-        if (idx_ == itemList.size() - 1)
+        if (idx_ <= itemList.size() - 1)
         {
             outputStream << "  },\n";
         }

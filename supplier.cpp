@@ -18,6 +18,8 @@ Supplier::Supplier(std::string name, Item &i)
 
 Supplier::~Supplier()
 {
+    setAlive(false);
+    item->getConditionalVariable(item_name)->notify_all();
     supply_thread->join();
     delete supply_thread;
     supply_thread = nullptr;
@@ -75,34 +77,40 @@ void Supplier::setSupply_time(int time)
 
 void Supplier::supplyItem()
 {
-#ifdef DEBUG
+    #ifdef DEBUG
     std::cout << "supply_thread started. " << std::endl;
-#endif
-    std::unique_lock<std::mutex> lock(item->getMutex());
+    #endif
+    std::unique_lock<std::mutex> lock(*item->getMutex(item_name));
     while (alive)
     {
-#ifdef DEBUG
-        std::cout << "[" << item_name << "]" <<"supply_thread: " << isAlive() << std::endl;
-#endif
+        #ifdef DEBUG
+        std::cout << "[" << item_name << "]" << "supply_thread: " << isAlive() << std::endl;
+        #endif
         while (!isNeedSupply())
         {
             #ifdef DEBUG
-                std::cout << "[" << item_name << "]" << "supplier is waiting."<< std::endl;
+            std::cout << "[" << item_name << "]" << "supplier is waiting." << std::endl;
             #endif
             item->getConditionalVariable(item_name)->wait(lock);
+            if (!alive)
+                return;
         }
-        lock.lock();
+        //lock.lock();
         sleep(getSupply_time());
         item->increaseQuantity(item_name, supply_nums);
+        printf(YELLOW_LEADING_ARROW YELLOW_BOLD_TEXT "补货：" REMOVE_TEXT_ATTR "商品：%15s，补%2d个货后，现有%3d个\n", item_name.c_str(),getSupply_nums(), item->getQuantity(item_name));
+        #ifdef DEBUG
+        std::cout << "[" << item_name << "]" << "supply done. now have: " << item->getQuantity(item_name) << std::endl;
+        #endif
         needSupply = false;
         item->getConditionalVariable(item_name)->notify_all();
         #ifdef DEBUG
-                std::cout << "[" << item_name << "]" << "supplier notify_all."<< std::endl;
+        std::cout << "[" << item_name << "]" << "supplier notify_all." << std::endl;
         #endif
-        lock.unlock();
+        //lock.unlock();
     }
-#ifdef DEBUG
+    #ifdef DEBUG
     std::cout << "supply_thread no longer alive. " << std::endl;
-#endif
+    #endif
     return;
 }
