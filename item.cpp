@@ -184,7 +184,7 @@ void Item::writeObject(std::ostream &outputStream)
             }
         }
 
-        if (idx_ == itemList.size() - 1)
+        if (idx_ <= itemList.size() - 1)
         {
             outputStream << "  },\n";
         }
