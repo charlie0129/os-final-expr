@@ -98,11 +98,11 @@ int main(int argc, char **argv)
         suppliers.push_back(tmp);
     }
 
-    for (size_t i = 0; i < 15; i++)
+    for (size_t i = 0; i < 6; i++)
     {
         Customer* tmp=new Customer{itemRepository, suppliers, &checker};
         customers.push_back(tmp);
-        sleep(5);
+        sleep(1);
     }
 
     for (Supplier* i : suppliers)
