@@ -69,7 +69,7 @@ void Supplier::supplyItem(){
     std::unique_lock<std::mutex> lock(item->getMutex());
     while(alive){
         #ifdef DEBUG
-        std::cout << isAlive() << std::endl;
+        std::cout << "supply_thread" << isAlive() << std::endl;
         #endif
         while(!isNeedSupply())
             item->getConditionalVariable(item_name)->wait(lock);
