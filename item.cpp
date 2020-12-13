@@ -122,10 +122,10 @@ int Item::getQuantity(const std::string &itemName)
     return getPropertyValue(itemName, "quantity");
 }
 
-std::condition_variable* Item::getConditionalVariable(const std::string& itemName)
+std::condition_variable *Item::getConditionalVariable(const std::string &itemName)
 {
-    std::map<std::string, std::condition_variable*>::iterator it;
-    if ((it=conditionVarList.find(itemName)) == conditionVarList.end())
+    std::map<std::string, std::condition_variable *>::iterator it;
+    if ((it = conditionVarList.find(itemName)) == conditionVarList.end())
     {
         throw std::runtime_error{"The item you referred to does not exist."};
         return nullptr;
@@ -134,10 +134,10 @@ std::condition_variable* Item::getConditionalVariable(const std::string& itemNam
     return it->second;
 }
 
-std::mutex* Item::getMutex(const std::string& itemName)
+std::mutex *Item::getMutex(const std::string &itemName)
 {
-    std::map<std::string, std::mutex*>::iterator it;
-    if ((it=mtx_cvList.find(itemName)) == mtx_cvList.end())
+    std::map<std::string, std::mutex *>::iterator it;
+    if ((it = mtx_cvList.find(itemName)) == mtx_cvList.end())
     {
         throw std::runtime_error{"The item you referred to does not exist."};
         return nullptr;
@@ -174,7 +174,7 @@ void Item::writeObject(std::ostream &outputStream)
              j != i->second.end();
              j++, idx++)
         {
-            if (idx == i->second.size() - 1)
+            if (idx <= i->second.size() - 1)
             {
                 outputStream << "    \"" << j->first << "\": " << j->second << ",\n";
             }
