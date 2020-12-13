@@ -11,5 +11,6 @@
 !supplier.hpp
 !checker.hpp
 !checker.cpp
+!colorcode.hpp
 !Makefile
 !README.md
