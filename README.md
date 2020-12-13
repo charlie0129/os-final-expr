@@ -21,7 +21,7 @@
    ```
 
 2. build binary: `make`
-3. run: `./final --database the-database-you-created.json`
+3. run: `./final --database the-database-you-created.json --customer <the number you want>`
 
 ### TODO
 
