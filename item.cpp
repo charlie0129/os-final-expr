@@ -21,7 +21,8 @@ int Item::addItem(const std::string &name)
     }
 
     itemList.insert({name, std::map<std::string, int>{}});
-
+    std::condition_variable *v = new std::condition_variable;
+    conditionVarList.insert({name, v});
     mtx_itemList.unlock();
     return 0;
 }
@@ -117,6 +118,23 @@ int Item::decreaseQuantity(const std::string &itemName, int offset)
 int Item::getQuantity(const std::string &itemName)
 {
     return getPropertyValue(itemName, "quantity");
+}
+
+std::condition_variable* Item::getConditionalVariable(const std::string& itemName)
+{
+    std::map<std::string, std::condition_variable*>::iterator it;
+    if ((it=conditionVarList.find(itemName)) == conditionVarList.end())
+    {
+        throw std::runtime_error{"The item you referred to does not exist."};
+        return nullptr;
+    }
+
+    return it->second;
+}
+
+std::mutex& Item::getMutex()
+{
+    return mtx_cv;
 }
 
 std::vector <std::string> Item::getItemNameList()
@@ -234,4 +252,6 @@ void Item::readObject(std::istream &inputStream)
 
 Item::~Item()
 {
+    for (auto &i : conditionVarList)
+        delete i.second;
 }

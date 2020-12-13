@@ -1,9 +1,5 @@
 #include "final.hpp"
 
-Item itemRepository{};
-std::mutex ReSupply;//通知补获锁
-std::mutex Check;//顾客结账锁
-
 void test()
 {
     // -------- Code for Testing Purposes ---------
@@ -69,6 +65,16 @@ void test()
     std::cout << BLUE_BOLD_TEXT "Get quantity of pancake: " REMOVE_TEXT_ATTR << ii.getQuantity("pancake") << "\n";
     // -------- Code for Testing Purposes ---------
 }
+
+
+void supplierTest()
+{
+    // Supplier sup{"cake",itemRepository};
+    // sleep(2);
+    // sup.setAlive(false);
+    // sleep(2);
+}
+
 void testcreat()
 {
     std::thread t1(test);
@@ -79,6 +85,28 @@ void testcreat()
 
 int main(int argc, char **argv)
 {
-    testcreat();
+    std::ifstream ifs{"test.json"};
+    Item itemRepository{ifs};
+    ifs.close();
+    std::vector<Supplier*> suppliers;
+    // std::vector<Customer*> customers;
+    for (size_t i = 0; i < itemRepository.getItemNameList().size(); i++)
+    {
+        Supplier* tmp=new Supplier{(itemRepository.getItemNameList())[i],itemRepository};
+        suppliers.push_back(tmp);
+    }
+
+    // Checker
+    
+
+    
+
+    for (Supplier* i : suppliers)
+        delete i;
+    // for (Customer* i : customers)
+    //     delete i;
+    std::ofstream ofs{"test.json"};
+    itemRepository.writeObject(ofs);
+    ofs.close();
     return 0;
 }
