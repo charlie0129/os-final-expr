@@ -40,7 +40,7 @@ void Checker::doCheckout()
         #endif
         while (waiting_cus.empty())
         {
-            sleep(2);
+            sleep(1);
         }
         check_mtx.lock();
         std::pair<std::string, int> cus = waiting_cus.front();

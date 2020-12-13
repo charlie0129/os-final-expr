@@ -18,6 +18,7 @@ Supplier::Supplier(std::string name, Item &i)
 
 Supplier::~Supplier()
 {
+    setAlive(false);
     supply_thread->join();
     delete supply_thread;
     supply_thread = nullptr;

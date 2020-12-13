@@ -1,5 +1,9 @@
 #include "final.hpp"
 
+Item itemRepository{};
+std::vector<Supplier*> suppliers;
+std::vector<Customer*> customers;
+
 void test()
 {
     // -------- Code for Testing Purposes ---------
@@ -83,13 +87,35 @@ void testcreat()
     t2.join();
 }
 
+void signal_handler(int signal)
+{
+    for (Supplier* i : suppliers)
+        i->setAlive(false);
+    for (Supplier* i : suppliers)
+        delete i;
+    for (Customer* i : customers)
+        delete i;
+    puts("stopped threads");
+
+    std::ofstream ofs{"test.json"};
+    itemRepository.writeObject(ofs);
+    ofs.close();
+
+    puts("saved file");
+
+    exit(0);
+    return;
+}
+
 int main(int argc, char **argv)
 {
+    signal(SIGINT, signal_handler);
+    signal(SIGTERM, signal_handler);
+
     std::ifstream ifs{"test.json"};
-    Item itemRepository{ifs};
+    itemRepository.readObject(ifs);
     ifs.close();
-    std::vector<Supplier*> suppliers;
-    std::vector<Customer*> customers;
+    
     Checker checker{1, itemRepository};
     
     for (size_t i = 0; i < itemRepository.getItemNameList().size(); i++)
@@ -98,19 +124,13 @@ int main(int argc, char **argv)
         suppliers.push_back(tmp);
     }
 
-    for (size_t i = 0; i < 15; i++)
+    for (size_t i = 0; i < 5; i++)
     {
         Customer* tmp=new Customer{itemRepository, suppliers, &checker};
         customers.push_back(tmp);
-        sleep(5);
+        sleep(1);
     }
 
-    for (Supplier* i : suppliers)
-        delete i;
-    // for (Customer* i : customers)
-    //     delete i;
-    std::ofstream ofs{"test.json"};
-    itemRepository.writeObject(ofs);
-    ofs.close();
+    sleep(INT_MAX);
     return 0;
 }

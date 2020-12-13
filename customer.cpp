@@ -5,6 +5,7 @@ Customer::Customer(Item& item,std::vector<Supplier*>& spp,Checker* a)
     this->i=&item;
     srand(time(NULL));
     int itemIdx = rand() % i->getItemNameList().size();
+    goodNum =rand()%10  + 1;
     this->itemname={i->getItemNameList()[itemIdx],goodNum};//获取商品名
     myChecker=a;
     for(auto j:spp)
