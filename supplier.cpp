@@ -64,18 +64,20 @@ void Supplier::setSupply_time(int time){
 
 void Supplier::supplyItem(){
     #ifdef DEBUG
-        std::cout << "supply_thread started. " << std::endl;
+            std::cout << "supply_thread started. " << std::endl;
     #endif
+    std::unique_lock<std::mutex> lock(item->getMutex());
     while(alive){
         #ifdef DEBUG
         std::cout << isAlive() << std::endl;
         #endif
-        sleep(1);
-        if(isNeedSupply()){
-            sleep(getSupply_time());
-            item->increaseQuantity(item_name,supply_nums);
-            needSupply = false;
-        }
+        while(!isNeedSupply())
+            item->getConditionalVariable(item_name)->wait(lock);
+        sleep(getSupply_time());
+        item->increaseQuantity(item_name,supply_nums);
+        needSupply = false;
+        item->getConditionalVariable(item_name)->notify_all();
+        lock.unlock();
     }   
     #ifdef DEBUG
         std::cout << "supply_thread no longer alive. " << std::endl;
