@@ -3,46 +3,45 @@
 extern Item itemRepository;
 extern std::mutex ReSupply;//通知补获锁
 extern std::mutex Check;//顾客结账锁
+
 class customer
 {
     Item* i;
-    std::vector<std::string> itemname;
+    std::pair<std::string,int> itemname;
     int *stuff;
-    customer(Item& item)
+    Supplier* mySpp;
+    int goodNum=rand()%10;
+    customer(Item& item,std::vector<Supplier*>& spp,Checker* a)
     {
         this->i=&item;
-        this->itemname=this->i->getItemNameList();//获取商品名
-        this->stuff=(int*)malloc(sizeof(int)*(this->itemname.size()));//获取商品数量
-        Quantity(stuff,(this->itemname.size()));//随机创建数量
-        std::thread shopping(INOUT);//建立购买线程
+        srand(time(NULL));
+        int itemIdx = rand() % i->getItemNameList().size();
+        this->itemname={i->getItemNameList()[itemIdx],goodNum};//获取商品名
+        for(auto j:spp)
+        {
+            if(j->getItem_name()==this->itemname.first)
+            {
+                this->mySpp=j;
+            }
+        }
+        std::thread shopping(IN);//建立购买线程
     }
-    void INOUT()
+    
+    void IN()
     {
-        int RemainToBuy=this->itemname.size(); //？？？
         int count=0;//从第一个商品开始购买
         int PresentGoodValue;//检查当前商品数量
-        while(RemainToBuy>=count)
+        std::unique_lock<std::mutex> lock(i->getMutex());
+        PresentGoodValue=i->getQuantity(this->itemname.first);
+        while(PresentGoodValue<this->goodNum)
         {
-            PresentGoodValue=itemRepository.getPropertyValue(this->itemname.back(),"quantity");
-            if(PresentGoodValue<this->stuff[count])
-            {
-                ReSupply.lock();
-            /*
-                wait for WHT mutex
-            */
+            mySpp->setNeedSupply(true);
+            this->i->getConditionalVariable(itemname.first)->wait(lock);
             
-            }
-
-
-            count++;
         }
-    }
-    void Quantity(int *stuff,int stuffnum)
-    {
-        for(int i=0;i<stuffnum;i++)
-        {
-            *(stuff+i)=rand()%10;
-        }
+        i->decreaseQuantity(this->itemname.first,-(this->goodNum));//拿走商品
+        lock.unlock();
+        //进结账队列
     }
 
 };
