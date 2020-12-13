@@ -10,5 +10,6 @@
 !supplier.cpp
 !supplier.hpp
 !checker.hpp
+!checker.cpp
 !Makefile
 !README.md
