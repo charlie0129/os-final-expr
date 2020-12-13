@@ -1,3 +1,10 @@
+/*
+ * File: checker.hpp
+ * Author: WHT (wanghaotian@bupt.edu.cn)
+ * -----
+ * Copyright (c) 2020 WHT
+ */
+
 #pragma once
 #include "item.hpp"
 #include <map>

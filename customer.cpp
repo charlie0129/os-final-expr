@@ -1,3 +1,10 @@
+/*
+ * File: customer.cpp
+ * Author: d10sama (57121785+d10sama@users.noreply.github.com)
+ * -----
+ * Copyright (c) 2020 d10sama
+ */
+
 #include "customer.hpp"
 
 Customer::Customer(Item &item, std::vector<Supplier *> &spp, Checker *a)

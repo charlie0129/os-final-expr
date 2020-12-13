@@ -1,3 +1,10 @@
+/*
+ * File: item.cpp
+ * Author: Charlie Chiang (charlie_c_0129@outlook.com)
+ * -----
+ * Copyright (c) 2020 Charlie Chiang
+ */
+
 #include "item.hpp"
 
 Item::Item()

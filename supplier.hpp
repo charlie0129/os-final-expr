@@ -1,3 +1,10 @@
+/*
+ * File: supplier.hpp
+ * Author: WHT (wanghaotian@bupt.edu.cn)
+ * -----
+ * Copyright (c) 2020 WHT
+ */
+
 #pragma once
 #include "item.hpp"
 #include "colorcode.hpp"
@@ -9,7 +16,6 @@
 #include <stdexcept>
 #include <thread>
 #include <atomic>
-
 
 class Supplier
 {

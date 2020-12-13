@@ -1,3 +1,11 @@
+/*
+ * File: colorcode.hpp
+ * Author: Charlie Chiang (charlie_c_0129@outlook.com)
+ * -----
+ * Copyright (c) 2020 Charlie Chiang
+ */
+
+#pragma once
 #define BLUE_BOLD_TEXT "\033[1;34m"
 #define RED_BOLD_TEXT "\033[1;31m"
 #define GREEN_BOLD_TEXT "\033[1;32m"

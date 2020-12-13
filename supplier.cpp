@@ -1,3 +1,10 @@
+/*
+ * File: supplier.cpp
+ * Author: WHT (wanghaotian@bupt.edu.cn)
+ * -----
+ * Copyright (c) 2020 WHT
+ */
+
 #include "item.hpp"
 #include "supplier.hpp"
 

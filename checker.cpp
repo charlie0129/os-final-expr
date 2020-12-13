@@ -1,3 +1,10 @@
+/*
+ * File: checker.hpp
+ * Author: WHT (wanghaotian@bupt.edu.cn)
+ * -----
+ * Copyright (c) 2020 WHT
+ */
+
 #include "checker.hpp"
 
 Checker::Checker()
@@ -53,8 +60,6 @@ void Checker::doCheckout()
                cus.second,
                m * cus.second
               );
-        // std::cout << BLUE_LEADING_ARROW GREEN_BOLD_TEXT "结账：商品：" << cus.first << " 数量： " <<
-        //           cus.second << " 总价：" << m *cus.second << REMOVE_TEXT_ATTR << std::endl;
         waiting_cus.pop();
         check_mtx.unlock();
     }

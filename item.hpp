@@ -1,3 +1,10 @@
+/*
+ * File: item.hpp
+ * Author: Charlie Chiang (charlie_c_0129@outlook.com)
+ * -----
+ * Copyright (c) 2020 Charlie Chiang
+ */
+
 #pragma once
 #include <map>
 #include <string>

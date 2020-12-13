@@ -1,3 +1,10 @@
+/*
+ * File: customer.hpp
+ * Author: d10sama (57121785+d10sama@users.noreply.github.com)
+ * -----
+ * Copyright (c) 2020 d10sama
+ */
+
 #pragma once
 #include <thread>
 #include "item.hpp"
