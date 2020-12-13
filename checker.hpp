@@ -21,6 +21,7 @@ class Checker{
         std::thread * checker_thread = nullptr;
     public:
         Checker();
+        ~Checker();
         Checker(int id, Item& i);
         void addWaitingLine(std::pair<std::string, int> p);
         void doCheckout();
