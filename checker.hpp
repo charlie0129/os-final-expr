@@ -8,6 +8,7 @@
 #include <mutex>
 #include <stdexcept>
 #include <thread>
+#include <atomic>
 #include "colorcode.hpp"
 
 class Checker{

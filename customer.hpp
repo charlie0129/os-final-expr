@@ -4,6 +4,7 @@
 #include <cmath>
 #include <ctime>
 #include "checker.hpp"
+#include "supplier.hpp"
 
 class Customer
 {
