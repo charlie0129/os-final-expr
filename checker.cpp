@@ -55,7 +55,7 @@ void Checker::doCheckout()
         printf(BLUE_LEADING_ARROW BLUE_BOLD_TEXT "结账：" REMOVE_TEXT_ATTR
                "商品：" YELLOW_TEXT "%15s" REMOVE_TEXT_ATTR
                ", 数量：" YELLOW_TEXT "%3d" REMOVE_TEXT_ATTR
-               ", 总价：" YELLOW_TEXT "%3d" REMOVE_TEXT_ATTR "\n",
+               " , 总价：" YELLOW_TEXT "%3d" REMOVE_TEXT_ATTR "\n",
                cus.first.c_str(),
                cus.second,
                m * cus.second
