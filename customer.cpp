@@ -27,7 +27,7 @@ void Customer::IN()
 {
     int count=0;//从第一个商品开始购买
     int PresentGoodValue;//检查当前商品数量
-    std::unique_lock<std::mutex> lock(i->getMutex());
+    std::unique_lock<std::mutex> lock(* i->getMutex(itemname.first));
     PresentGoodValue=i->getQuantity(this->itemname.first);
     #ifdef DEBUG
         std::cout << "customer need: " << itemname.first << "," << goodNum << std::endl;

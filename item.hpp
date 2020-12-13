@@ -14,8 +14,8 @@ class Item
     private:
         std::map<std::string, std::map<std::string, int>> itemList;
         std::map<std::string, std::condition_variable*> conditionVarList;
+        std::map<std::string, std::mutex*> mtx_cvList;
         std::mutex mtx_itemList;
-        std::mutex mtx_cv;
 
     public:
         Item();
@@ -29,7 +29,7 @@ class Item
         int decreaseQuantity(const std::string& itemName, int offset = -1);
         int getQuantity(const std::string& itemName);
         std::condition_variable* getConditionalVariable(const std::string& itemName);
-        std::mutex& getMutex();
+        std::mutex* getMutex(const std::string& itemName);
         std::vector <std::string> getItemNameList();
 
         void writeObject(std::ostream& outputStream);
