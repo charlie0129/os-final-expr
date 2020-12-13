@@ -27,13 +27,31 @@ void signal_handler(int sig)
     return;
 }
 
+void printUsage()
+{
+    fprintf(stderr,
+            "DESCRIPTION:\n"
+            "    A store simulator.\n"
+            "SYNOPSIS:\n"
+            "    smc_fan_util [--database db_file] [--customer num]\n"
+            "OPTIONS:\n"
+            "    --database <db_file>: assign database file.\n"
+            "    --customer <num>: set the number of customers.\n"\
+            "EXAMPLES:\n"
+            "    final --database test.json --customer 5\n");
+}
+
 int main(int argc, char **argv)
 {
-    if (argc != 3 || strcmp(argv[1], "--database"))
+    if (argc != 5
+        || strcmp(argv[1], "--database")
+        || strcmp(argv[3], "--customer"))
     {
         puts(RED_BOLD_TEXT "参数错误！" REMOVE_TEXT_ATTR);
+        printUsage();
         return 1;
     }
+
     signal(SIGINT, signal_handler);
     signal(SIGTERM, signal_handler);
 
@@ -54,7 +72,7 @@ int main(int argc, char **argv)
         suppliers.push_back(tmp);
     }
 
-    for (size_t i = 0; i < 5; i++)
+    for (size_t i = 0; i < atoi(argv[4]); i++)
     {
         Customer *tmp = new Customer{itemRepository, suppliers, &checker};
         customers.push_back(tmp);
