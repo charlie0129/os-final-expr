@@ -6,3 +6,4 @@
 #define REMOVE_TEXT_ATTR "\033[0m"
 #define BLUE_LEADING_ARROW "\033[1;34m=> \033[0m"
 #define YELLOW_LEADING_ARROW "\033[1;33m=> \033[0m"
+#define RED_LEADING_ARROW "\033[1;31m=> \033[0m"
