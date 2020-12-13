@@ -36,17 +36,17 @@ void Checker::doCheckout()
     while (alive)
     {
         #ifdef DEBUG
-        std::cout << "checker_thread" << isAlive() << std::endl;
+        std::cout << "checker_thread: " << isAlive() << std::endl;
         #endif
         while (waiting_cus.empty())
         {
-            sleep(5);
+            sleep(2);
         }
         check_mtx.lock();
         std::pair<std::string, int> cus = waiting_cus.front();
         int m = item->getPropertyValue(cus.first, "price");
         std::cout << BLUE_LEADING_ARROW GREEN_BOLD_TEXT "结账：商品：" << cus.first << " 数量： " <<
-                  cus.second << " 总价：" << m *cus.second << REMOVE_TEXT_ATTR;
+                  cus.second << " 总价：" << m *cus.second << REMOVE_TEXT_ATTR << std::endl;
         waiting_cus.pop();
         check_mtx.unlock();
     }

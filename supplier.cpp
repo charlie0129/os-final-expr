@@ -1,12 +1,12 @@
 #include "item.hpp"
 #include "supplier.hpp"
 
-
 Supplier::Supplier()
 {
 }
 
-Supplier::Supplier(std::string name, Item& i){
+Supplier::Supplier(std::string name, Item &i)
+{
     this->item = &i;
     this->item_name = name;
     this->supply_nums = 10;
@@ -16,71 +16,93 @@ Supplier::Supplier(std::string name, Item& i){
     supply_thread = new std::thread(&Supplier::supplyItem, this);
 }
 
-Supplier::~Supplier(){
+Supplier::~Supplier()
+{
     supply_thread->join();
     delete supply_thread;
     supply_thread = nullptr;
 }
 
-std::string Supplier::getItem_name(){
+std::string Supplier::getItem_name()
+{
     return item_name;
 }
 
-std::thread* Supplier::getSupply_thread(){
+std::thread *Supplier::getSupply_thread()
+{
     return supply_thread;
 }
 
-bool Supplier::isNeedSupply(){
+bool Supplier::isNeedSupply()
+{
     return needSupply;
 }
 
-bool Supplier::isAlive(){
+bool Supplier::isAlive()
+{
     return alive;
 }
 
-void Supplier::setAlive(bool a){
+void Supplier::setAlive(bool a)
+{
     this->alive = a;
 }
 
-void Supplier::setNeedSupply(bool need){
+void Supplier::setNeedSupply(bool need)
+{
     this->needSupply = need;
 }
 
-int Supplier::getSupply_nums(){
+int Supplier::getSupply_nums()
+{
     return supply_nums;
 }
 
-int Supplier::getSupply_time(){
+int Supplier::getSupply_time()
+{
     return supply_time;
 }
 
-void Supplier::setSupply_nums(int nums){
+void Supplier::setSupply_nums(int nums)
+{
     this->supply_nums = nums;
 }
 
-void Supplier::setSupply_time(int time){
+void Supplier::setSupply_time(int time)
+{
     this->supply_time = time;
 }
 
-void Supplier::supplyItem(){
-    #ifdef DEBUG
-            std::cout << "supply_thread started. " << std::endl;
-    #endif
+void Supplier::supplyItem()
+{
+#ifdef DEBUG
+    std::cout << "supply_thread started. " << std::endl;
+#endif
     std::unique_lock<std::mutex> lock(item->getMutex());
-    while(alive){
-        #ifdef DEBUG
-        std::cout << "supply_thread" << isAlive() << std::endl;
-        #endif
-        while(!isNeedSupply())
+    while (alive)
+    {
+#ifdef DEBUG
+        std::cout << "[" << item_name << "]" <<"supply_thread: " << isAlive() << std::endl;
+#endif
+        while (!isNeedSupply())
+        {
+            #ifdef DEBUG
+                std::cout << "[" << item_name << "]" << "supplier is waiting."<< std::endl;
+            #endif
             item->getConditionalVariable(item_name)->wait(lock);
+        }
+        lock.lock();
         sleep(getSupply_time());
-        item->increaseQuantity(item_name,supply_nums);
+        item->increaseQuantity(item_name, supply_nums);
         needSupply = false;
         item->getConditionalVariable(item_name)->notify_all();
+        #ifdef DEBUG
+                std::cout << "[" << item_name << "]" << "supplier notify_all."<< std::endl;
+        #endif
         lock.unlock();
-    }   
-    #ifdef DEBUG
-        std::cout << "supply_thread no longer alive. " << std::endl;
-    #endif
+    }
+#ifdef DEBUG
+    std::cout << "supply_thread no longer alive. " << std::endl;
+#endif
     return;
 }

@@ -12,7 +12,7 @@ class Customer
     std::pair<std::string,int> itemname;
     int *stuff;
     Supplier* mySpp;
-    int goodNum=rand()%10;
+    int goodNum=rand()%10  + 1;
     std::thread * customerThread = nullptr;
     Checker* myChecker;
     public:

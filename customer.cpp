@@ -29,14 +29,26 @@ void Customer::IN()
     int PresentGoodValue;//检查当前商品数量
     std::unique_lock<std::mutex> lock(i->getMutex());
     PresentGoodValue=i->getQuantity(this->itemname.first);
-    while(PresentGoodValue<this->goodNum)
+    #ifdef DEBUG
+        std::cout << "customer need: " << itemname.first << "," << goodNum << std::endl;
+    #endif
+    while(PresentGoodValue < this->goodNum)
     {
         mySpp->setNeedSupply(true);
-        this->i->getConditionalVariable(itemname.first)->wait(lock);
+        i->getConditionalVariable(itemname.first)->notify_all();
+        #ifdef DEBUG
+            std::cout << "customer notifyAll."<< std::endl;
+        #endif
+        i->getConditionalVariable(itemname.first)->wait(lock);
         
     }
+    
+    //lock.lock();
     i->decreaseQuantity(this->itemname.first,-(this->goodNum));//拿走商品
-    lock.unlock();
+    //lock.unlock();
+    #ifdef DEBUG
+        std::cout << "customer get goods: " << itemname.first << "," << goodNum << std::endl;
+    #endif
     //进结账队列
     myChecker->addWaitingLine(this->itemname);
 }
