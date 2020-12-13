@@ -29,10 +29,15 @@ void signal_handler(int sig)
 
 int main(int argc, char **argv)
 {
+    if (argc != 3 || strcmp(argv[1], "--database"))
+    {
+        puts(RED_BOLD_TEXT "参数错误！" REMOVE_TEXT_ATTR);
+        return 1;
+    }
     signal(SIGINT, signal_handler);
     signal(SIGTERM, signal_handler);
 
-    std::ifstream ifs{"test.json"};
+    std::ifstream ifs{argv[2]};
     if (ifs.fail())
     {
         puts(RED_BOLD_TEXT "请先创建数据库！" REMOVE_TEXT_ATTR);

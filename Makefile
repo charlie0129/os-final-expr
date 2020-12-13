@@ -10,7 +10,7 @@ RMR = rm -rf
 all: $(BIN)
 
 run: $(BIN)
-	./$(BIN)
+	./$(BIN) --database test.json
 
 $(CXXOBJS): %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
