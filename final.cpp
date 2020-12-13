@@ -89,15 +89,22 @@ int main(int argc, char **argv)
     Item itemRepository{ifs};
     ifs.close();
     std::vector<Supplier*> suppliers;
-    // std::vector<Customer*> customers;
+    std::vector<Customer*> customers;
+    Checker checker{1, itemRepository};
+    
     for (size_t i = 0; i < itemRepository.getItemNameList().size(); i++)
     {
         Supplier* tmp=new Supplier{(itemRepository.getItemNameList())[i],itemRepository};
         suppliers.push_back(tmp);
     }
 
-    // Checker
+    for (size_t i = 0; i < 5; i++)
+    {
+        Customer* tmp=new Customer{itemRepository, suppliers, &checker};
+        customers.push_back(tmp);
+    }
     
+
 
     
 

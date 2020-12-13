@@ -1,9 +1,10 @@
 #pragma once
 #include <thread>
 #include "item.hpp"
-#include<cmath>
+#include <cmath>
 #include <ctime>
-#include"checker.hpp"
+#include "checker.hpp"
+#include "supplier.hpp"
 
 class Customer
 {
