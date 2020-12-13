@@ -1,6 +1,5 @@
 #pragma once
 #include "item.hpp"
-#include "final.hpp"
 #include <map>
 #include <unistd.h>
 #include <queue>
@@ -9,6 +8,7 @@
 #include <mutex>
 #include <stdexcept>
 #include <thread>
+#include "colorcode.hpp"
 
 class Checker{
     private:
