@@ -7,11 +7,13 @@
 #include <ostream>
 #include <istream>
 #include <vector>
+#include <condition_variable>
 
 class Item
 {
     private:
         std::map<std::string, std::map<std::string, int>> itemList;
+        std::map<std::string, std::condition_variable*> conditionVarList;
         std::mutex mtx_itemList;
 
     public:

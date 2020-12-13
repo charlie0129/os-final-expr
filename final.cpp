@@ -68,10 +68,10 @@ void test()
 
 void supplierTest()
 {
-    Supplier sup{"cake",itemRepository};
-    sleep(2);
-    sup.setAlive(false);
-    sleep(2);
+    // Supplier sup{"cake",itemRepository};
+    // sleep(2);
+    // sup.setAlive(false);
+    // sleep(2);
 }
 
 int main(int argc, char **argv)
