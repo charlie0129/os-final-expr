@@ -11,12 +11,16 @@ class customer
     int *stuff;
     Supplier* mySpp;
     int goodNum=rand()%10;
+    std::thread * customerThread = nullptr;
+    Checker* myChecker;
+    public:
     customer(Item& item,std::vector<Supplier*>& spp,Checker* a)
     {
         this->i=&item;
         srand(time(NULL));
         int itemIdx = rand() % i->getItemNameList().size();
         this->itemname={i->getItemNameList()[itemIdx],goodNum};//获取商品名
+        myChecker=a;
         for(auto j:spp)
         {
             if(j->getItem_name()==this->itemname.first)
@@ -24,8 +28,15 @@ class customer
                 this->mySpp=j;
             }
         }
-        std::thread shopping(IN);//建立购买线程
+        customerThread = new std::thread{&customer::IN, this};
     }
+
+    ~customer()
+    {
+        customerThread->join();
+        delete customerThread;
+    }
+
     
     void IN()
     {
@@ -42,6 +53,7 @@ class customer
         i->decreaseQuantity(this->itemname.first,-(this->goodNum));//拿走商品
         lock.unlock();
         //进结账队列
+        myChecker->addWaitingLine(this->itemname);
     }
 
 };
