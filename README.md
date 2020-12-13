@@ -1,5 +1,29 @@
 ## Final experiment of Operating System Concept course at BUPT.
 
+### How to run this project
+1. create a database file using json grammar using whatever name and extension you want (**grammar is strictly limited**, shown as below)
+
+   ```json
+   {
+     "Cyberpunk 2077": {
+       "price": 49,
+       "quantity": 2
+     },
+     "Milk": {
+       "price": 5,
+       "quantity": 7
+     },
+     "Pancake": {
+       "price": 2,
+       "quantity": 4
+     }
+   }
+   ```
+
+2. build binary: `make`
+å
+3. run: `./final --database the-database-you-created.json`
+
 ### TODO
 
 - [x] basic methods for `item` repository
