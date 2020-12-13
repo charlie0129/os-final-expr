@@ -21,7 +21,6 @@
    ```
 
 2. build binary: `make`
-å
 3. run: `./final --database the-database-you-created.json`
 
 ### TODO
