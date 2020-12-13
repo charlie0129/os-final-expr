@@ -3,6 +3,7 @@
 #include <thread>
 #include "item.hpp"
 #include "supplier.hpp"
+#include "customer.hpp"
 
 #define BLUE_BOLD_TEXT "\033[1;34m"
 #define RED_BOLD_TEXT "\033[1;31m"
