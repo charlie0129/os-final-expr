@@ -119,6 +119,16 @@ int Item::getQuantity(const std::string &itemName)
     return getPropertyValue(itemName, "quantity");
 }
 
+std::vector <std::string> Item::getItemNameList()
+{
+    std::vector<std::string>itemNameList{};
+    for (auto &i : itemList)
+    {
+        itemNameList.push_back(i.first);
+    }
+    return itemNameList;
+}
+
 void Item::writeObject(std::ostream &outputStream)
 {
     mtx_itemList.lock();
