@@ -13,7 +13,7 @@ std::vector<Customer *> customers;
 
 void signal_handler(int sig)
 {
-    printf(RED_BOLD_TEXT "收到 signal: %d, 关闭所有补货与结账线程\n" REMOVE_TEXT_ATTR, sig);
+    printf(RED_BOLD_TEXT "\n收到 signal: %d, 关闭所有补货与结账线程\n" REMOVE_TEXT_ATTR, sig);
     for (Supplier *i : suppliers)
         delete i;
     for (Customer *i : customers)
