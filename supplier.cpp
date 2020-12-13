@@ -98,7 +98,7 @@ void Supplier::supplyItem()
         //lock.lock();
         sleep(getSupply_time());
         item->increaseQuantity(item_name, supply_nums);
-        printf(YELLOW_LEADING_ARROW YELLOW_BOLD_TEXT "补货：" REMOVE_TEXT_ATTR "商品：%15s，补%2d个货后，现有%3d个\n", item_name.c_str(),getSupply_nums(), item->getQuantity(item_name));
+        printf(YELLOW_LEADING_ARROW YELLOW_BOLD_TEXT "补货：" REMOVE_TEXT_ATTR "商品：%15s, 补%2d个货后, 现有%3d个\n", item_name.c_str(),getSupply_nums(), item->getQuantity(item_name));
         #ifdef DEBUG
         std::cout << "[" << item_name << "]" << "supply done. now have: " << item->getQuantity(item_name) << std::endl;
         #endif

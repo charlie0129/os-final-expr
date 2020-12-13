@@ -87,34 +87,24 @@ void testcreat()
     t2.join();
 }
 
-void signal_handler(int signal)
+void signal_handler(int sig)
 {
-    puts("delete suppliers");
-    fflush(stdout);
+    printf(RED_BOLD_TEXT "收到 signal: %d, 关闭所有补货与结账线程\n" REMOVE_TEXT_ATTR, sig);
     for (Supplier *i : suppliers)
         delete i;
-    puts("delete customers");
-    fflush(stdout);
     for (Customer *i : customers)
         delete i;
-    puts("stopped threads");
-    fflush(stdout);
 
+    puts(RED_BOLD_TEXT "保存数据库..." REMOVE_TEXT_ATTR);
     std::ofstream ofs{"test.json"};
     itemRepository.writeObject(ofs);
     ofs.close();
-
-    puts("saved file");
-
     exit(0);
     return;
 }
 
 int main(int argc, char **argv)
 {
-    // test();
-    // return 0;
-
     signal(SIGINT, signal_handler);
     signal(SIGTERM, signal_handler);
 

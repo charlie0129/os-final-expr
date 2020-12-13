@@ -40,6 +40,7 @@ void Customer::IN()
         #ifdef DEBUG
         std::cout << "customer notifyAll." << std::endl;
         #endif
+        printf(RED_LEADING_ARROW RED_BOLD_TEXT "缺货：" REMOVE_TEXT_ATTR "商品：%15s, 需要%2d个货, 现有%3d个\n", itemname.first.c_str(), this->goodNum, PresentGoodValue);
         i->getConditionalVariable(itemname.first)->wait(lock);
     }
 
