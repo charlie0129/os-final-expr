@@ -66,12 +66,21 @@ void test()
     // -------- Code for Testing Purposes ---------
 }
 
+
 void supplierTest()
 {
     // Supplier sup{"cake",itemRepository};
     // sleep(2);
     // sup.setAlive(false);
     // sleep(2);
+}
+
+void testcreat()
+{
+    std::thread t1(test);
+    std::thread t2(test);
+    t1.join();
+    t2.join();
 }
 
 int main(int argc, char **argv)
