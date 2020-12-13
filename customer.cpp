@@ -1,10 +1,10 @@
-#include "customer.hpp"
+#include "Customer.hpp"
 
 extern Item itemRepository;
 extern std::mutex ReSupply;//通知补获锁
 extern std::mutex Check;//顾客结账锁
 
-class customer
+class Customer
 {
     Item* i;
     std::pair<std::string,int> itemname;
@@ -14,7 +14,7 @@ class customer
     std::thread * customerThread = nullptr;
     Checker* myChecker;
     public:
-    customer(Item& item,std::vector<Supplier*>& spp,Checker* a)
+    Customer(Item& item,std::vector<Supplier*>& spp,Checker* a)
     {
         this->i=&item;
         srand(time(NULL));
@@ -28,10 +28,10 @@ class customer
                 this->mySpp=j;
             }
         }
-        customerThread = new std::thread{&customer::IN, this};
+        customerThread = new std::thread{&Customer::IN, this};
     }
 
-    ~customer()
+    ~Customer()
     {
         customerThread->join();
         delete customerThread;
