@@ -9,5 +9,6 @@
 !customer.hpp
 !supplier.cpp
 !supplier.hpp
+!checker.hpp
 !Makefile
 !README.md
