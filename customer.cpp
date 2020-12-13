@@ -1,4 +1,4 @@
-#include "Customer.hpp"
+#include "customer.hpp"
 
 extern Item itemRepository;
 extern std::mutex ReSupply;//通知补获锁
